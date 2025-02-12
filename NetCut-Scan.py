@@ -57,10 +57,10 @@ def contains_sensitive_keywords(text):
 
 def save_content(clipboard_id, content):
     """保存剪切板内容到文件"""
-    dir_name = "find"
+    dir_name = "Find"
     os.makedirs(dir_name, exist_ok=True)  # 确保目录存在
     outfile_path = os.path.join(dir_name, f"{clipboard_id}.txt")
-    idout_path = "idout.txt"
+    idout_path = "ID_Out.txt"
     
     try:
         note_data = content.get("data", {})
@@ -86,11 +86,12 @@ def main():
     logo()
     file_path = "dir.txt"
     interval = 3600  # 每隔 60 分钟获取一次
+    print(f"[.] 读取 {file_path} 字典，准备开始爆破剪切板")
     while True:
         clipboard_ids = read_clipboard_ids(file_path)
         for clipboard_id in clipboard_ids:
             content = fetch_clipboard_content(clipboard_id)
-            #time.sleep(0.5)
+            time.sleep(0.2)
             if content and content.get("status") == 1:
                 print(f"[+] 成功获取剪切板 {clipboard_id} 内容")
                 save_content(clipboard_id, content)
